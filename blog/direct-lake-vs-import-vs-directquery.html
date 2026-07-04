@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direct Lake vs. Import vs. DirectQuery: Choosing the Right Storage Mode | shreehari.bi</title>
+  <meta name="description" content="A practical framework for choosing between Direct Lake, Import, and DirectQuery storage modes in Microsoft Fabric semantic models, based on data volume, freshness, and cost.">
+  <meta name="keywords" content="Direct Lake, Import mode, DirectQuery, Microsoft Fabric, Power BI semantic model, storage mode">
+  <meta name="author" content="Shreehari Bhattarai">
+  <link rel="canonical" href="https://shreeharibhattarai.com.np/blog/direct-lake-vs-import-vs-directquery.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Direct Lake vs. Import vs. DirectQuery: Choosing the Right Storage Mode">
+  <meta property="og:description" content="A practical framework for choosing a Fabric semantic model storage mode based on data volume, freshness, and cost.">
+  <meta property="og:url" content="https://shreeharibhattarai.com.np/blog/direct-lake-vs-import-vs-directquery.html">
+  <meta property="article:published_time" content="2026-06-14">
+  <meta property="article:author" content="Shreehari Bhattarai">
+  <meta property="article:section" content="Microsoft Fabric">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/inner.css">
+  <link rel="stylesheet" href="../assets/css/post.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Direct Lake vs. Import vs. DirectQuery: Choosing the Right Storage Mode",
+    "description": "A practical framework for choosing between Direct Lake, Import, and DirectQuery storage modes in Microsoft Fabric semantic models.",
+    "author": { "@type": "Person", "name": "Shreehari Bhattarai", "url": "https://shreeharibhattarai.com.np/about.html" },
+    "publisher": { "@type": "Organization", "name": "shreehari.bi", "url": "https://shreeharibhattarai.com.np/" },
+    "datePublished": "2026-06-14",
+    "dateModified": "2026-06-14",
+    "mainEntityOfPage": "https://shreeharibhattarai.com.np/blog/direct-lake-vs-import-vs-directquery.html"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://shreeharibhattarai.com.np/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://shreeharibhattarai.com.np/blog.html" },
+      { "@type": "ListItem", "position": 3, "name": "Direct Lake vs. Import vs. DirectQuery", "item": "https://shreeharibhattarai.com.np/blog/direct-lake-vs-import-vs-directquery.html" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is Direct Lake always faster than Import mode?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Not always. Import mode's in-memory VertiPaq engine can outperform Direct Lake on smaller models with heavy DAX, because Direct Lake has to read Parquet row groups on first access. Direct Lake wins mainly on freshness and scale, not raw query speed on small datasets." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I mix storage modes in one semantic model?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, this is called a composite model. You can combine Direct Lake or Import tables with DirectQuery tables, which is useful when most data can be modeled in Fabric but one source must remain live." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Direct Lake require Microsoft Fabric?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Direct Lake reads Delta Parquet tables directly from OneLake, so it only applies to Fabric Lakehouses and Warehouses, not to arbitrary external databases." }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="reading-progress" id="reading-progress"></div>
+
+  <nav class="site-nav">
+    <div class="container">
+      <a href="../index.html" class="brand"><span class="brand-mark">SB</span><span class="brand-name">shreehari<span>.bi</span></span></a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../blog.html" aria-current="page">Blog</a></li>
+        <li><a href="../tutorials/index.html">Tutorials</a></li>
+        <li><a href="../resources/index.html">Resources</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+      <a href="../contact.html" class="nav-cta">Book Consultation</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <main id="main">
+    <header class="post-header">
+      <div class="container narrow">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Home</a> <span>/</span> <a href="../blog.html">Blog</a> <span>/</span> <span>Direct Lake vs. Import vs. DirectQuery</span></nav>
+        <div class="badge-row"><span class="badge badge-violet">Microsoft Fabric</span></div>
+        <h1>Direct Lake vs. Import vs. DirectQuery: Choosing the Right Storage Mode</h1>
+        <div class="post-meta">
+          <span>Shreehari Bhattarai</span>
+          <span>June 14, 2026</span>
+          <span>9 min read</span>
+          <span>Fabric</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <div class="post-layout">
+          <aside class="post-toc">
+            <h4>On this page</h4>
+            <ul>
+              <li><a href="#the-three-modes">The three modes</a></li>
+              <li><a href="#how-direct-lake-works">How Direct Lake works</a></li>
+              <li><a href="#when-to-use-import">When to use Import</a></li>
+              <li><a href="#when-to-use-directquery">When to use DirectQuery</a></li>
+              <li><a href="#decision-framework">Decision framework</a></li>
+              <li><a href="#common-pitfalls">Common pitfalls</a></li>
+              <li><a href="#faq">FAQ</a></li>
+            </ul>
+          </aside>
+
+          <article class="post-body">
+            <p>One of the first architectural decisions in any Fabric semantic model is the storage mode, and it's a decision that's expensive to get wrong after the fact. I've rebuilt models from Import to Direct Lake mid-project because nobody weighed freshness requirements against dataset size upfront. Here's the framework I use now.</p>
+
+            <h2 id="the-three-modes">The three modes</h2>
+            <p>Microsoft Fabric semantic models support three storage modes, and each makes a different tradeoff between query speed, data freshness, and infrastructure cost:</p>
+            <ul>
+              <li><strong>Import</strong> loads data into VertiPaq, the in-memory columnar engine that also powers classic Power BI. Fast queries, but data is only as fresh as the last refresh.</li>
+              <li><strong>DirectQuery</strong> sends native queries to the source system for every visual interaction. Always fresh, but query performance depends entirely on the source.</li>
+              <li><strong>Direct Lake</strong> is Fabric-specific: it reads Delta Parquet files straight from OneLake without a separate import step, combining near-VertiPaq speed with near-real-time freshness.</li>
+            </ul>
+
+            <h2 id="how-direct-lake-works">How Direct Lake actually works</h2>
+            <p>Direct Lake doesn't copy data into the semantic model the way Import does. Instead, it memory-maps Delta Parquet row groups from OneLake directly into the analytical engine on first query, then keeps "hot" columns cached for subsequent queries. When the underlying Lakehouse or Warehouse table changes, Fabric can trigger an automatic framing operation that picks up the new Parquet files without a traditional refresh.</p>
+            <div class="callout">
+              <p>The practical effect: your Lakehouse can update every few minutes via a pipeline, and your Power BI report reflects that without you managing a separate refresh schedule for the semantic model.</p>
+            </div>
+            <p>The catch is fallback. If a query pattern isn't supported in Direct Lake (certain complex DAX, or a table exceeding guardrail limits for your capacity SKU), Fabric silently falls back to DirectQuery against the Warehouse SQL endpoint, which is slower. Watch for this in Performance Analyzer if a report that was fast suddenly isn't.</p>
+
+            <h2 id="when-to-use-import">When to use Import mode</h2>
+            <p>Import mode still wins in a few specific situations:</p>
+            <ul>
+              <li>The dataset is small enough that VertiPaq's compression makes the whole model trivially fast, and freshness requirements are daily or slower.</li>
+              <li>The model needs calculated tables, calculated columns, or DAX patterns that aren't yet supported against Direct Lake sources.</li>
+              <li>Data doesn't originate in a Fabric Lakehouse or Warehouse at all — for example, a mix of SharePoint lists and small Excel files.</li>
+            </ul>
+            <p>Import is also the safer default when you're prototyping. It's the mode with the fewest surprises, because the entire dataset genuinely lives in memory once loaded.</p>
+
+            <h2 id="when-to-use-directquery">When to use DirectQuery</h2>
+            <p>DirectQuery makes sense when freshness truly cannot wait for any caching layer — think trading desks or operational dashboards tied to a transactional system — or when the source dataset is too large to import economically, such as a multi-terabyte warehouse fact table that a handful of analysts query occasionally.</p>
+            <p>The tradeoff is real: every slicer click issues a new query against the source, so report performance is bounded by your SQL endpoint's concurrency and indexing, not by Power BI.</p>
+
+            <h2 id="decision-framework">A decision framework</h2>
+            <div class="code-block">
+              <div class="code-label"><span>decision-logic.txt</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+              <pre><code>Is the source a Fabric Lakehouse or Warehouse?
+  No  -> Import (or DirectQuery if source demands live data)
+  Yes -> Does the report need near-real-time freshness (minutes, not hours)?
+           No  -> Import is simplest; use it unless the model is huge
+           Yes -> Does the DAX/model use only Direct-Lake-supported patterns?
+                    Yes -> Direct Lake
+                    No  -> DirectQuery against the Warehouse SQL endpoint,
+                           or restructure the model to drop the blocking pattern</code></pre>
+            </div>
+
+            <h2 id="common-pitfalls">Common pitfalls I've seen</h2>
+            <ol>
+              <li><strong>Assuming Direct Lake is "free" performance.</strong> The first query against a cold column still pays a read cost from OneLake. Warm the model with a scheduled query if first-load latency matters to users.</li>
+              <li><strong>Ignoring capacity guardrails.</strong> Each Fabric capacity SKU has row group and table size limits for Direct Lake before automatic fallback to DirectQuery kicks in. Check these against your fact table sizes before committing to the mode.</li>
+              <li><strong>Building calculated columns into a Direct Lake model.</strong> These force a fallback for the whole table. Push that logic upstream into the Lakehouse or Warehouse instead.</li>
+            </ol>
+
+            <h2 id="faq">FAQ</h2>
+            <details class="faq-item">
+              <summary>Is Direct Lake always faster than Import mode?</summary>
+              <p>Not always. Import's in-memory VertiPaq engine can outperform Direct Lake on smaller models with heavy DAX, because Direct Lake has to read Parquet row groups on first access. Direct Lake wins mainly on freshness and scale, not raw query speed on small datasets.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Can I mix storage modes in one semantic model?</summary>
+              <p>Yes — this is a composite model. You can combine Direct Lake or Import tables with DirectQuery tables, which is useful when most data can be modeled in Fabric but one source must remain live.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Does Direct Lake require Microsoft Fabric?</summary>
+              <p>Yes. Direct Lake reads Delta Parquet tables directly from OneLake, so it only applies to Fabric Lakehouses and Warehouses, not arbitrary external databases.</p>
+            </details>
+
+            <div class="author-box card">
+              <div class="avatar">SB</div>
+              <div>
+                <h4>Shreehari Bhattarai</h4>
+                <p>Senior BI Consultant · DP-700, DP-600, PL-300 Microsoft Certified</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="related-posts">
+          <div class="section-head reveal"><p class="eyebrow">Related</p><h2>Keep reading</h2></div>
+          <div class="grid-3">
+            <a href="dax-context-transition-explained.html" class="card post-card reveal">
+              <div class="badge-row"><span class="badge badge-cyan">DAX</span></div>
+              <h3>Context transition in DAX, explained with real measures</h3>
+              <div class="meta"><span>11 min read</span></div>
+            </a>
+            <a href="pl-300-exam-guide.html" class="card post-card reveal">
+              <div class="badge-row"><span class="badge badge-yellow">Certification</span></div>
+              <h3>PL-300 exam guide: a study plan that actually works</h3>
+              <div class="meta"><span>8 min read</span></div>
+            </a>
+            <a href="../blog.html" class="card post-card reveal">
+              <div class="badge-row"><span class="badge">All posts</span></div>
+              <h3>Browse the full blog archive</h3>
+              <div class="meta"><span>View all →</span></div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>© 2026 Shreehari Bhattarai. All rights reserved.</p>
+        <p>Transforming Data into Insights</p>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" aria-label="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+  </button>
+
+  <script src="../assets/js/main.js"></script>
+  <script>
+    // Reading progress bar
+    window.addEventListener('scroll', () => {
+      const el = document.documentElement;
+      const scrolled = (el.scrollTop) / (el.scrollHeight - el.clientHeight) * 100;
+      document.getElementById('reading-progress').style.width = scrolled + '%';
+    }, { passive: true });
+
+    // Copy button for code blocks
+    function copyCode(btn) {
+      const code = btn.closest('.code-block').querySelector('code').textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        const original = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = original, 1500);
+      });
+    }
+
+    // TOC scroll spy
+    const headings = document.querySelectorAll('.post-body h2[id]');
+    const tocLinks = document.querySelectorAll('.post-toc a');
+    const spyObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const link = document.querySelector(`.post-toc a[href="#${entry.target.id}"]`);
+        if (link && entry.isIntersecting) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    headings.forEach(h => spyObserver.observe(h));
+  </script>
+</body>
+</html>

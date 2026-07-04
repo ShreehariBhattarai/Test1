@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Context Transition in DAX, Explained With Real Measures | shreehari.bi</title>
+  <meta name="description" content="Why CALCULATE changes everything in DAX, and how to reason about row context vs. filter context without memorizing rules. Explained with worked measure examples.">
+  <meta name="keywords" content="DAX, context transition, CALCULATE, row context, filter context, Power BI">
+  <meta name="author" content="Shreehari Bhattarai">
+  <link rel="canonical" href="https://shreeharibhattarai.com.np/blog/dax-context-transition-explained.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Context Transition in DAX, Explained With Real Measures">
+  <meta property="og:description" content="Why CALCULATE changes everything, and how to reason about row context vs. filter context.">
+  <meta property="og:url" content="https://shreeharibhattarai.com.np/blog/dax-context-transition-explained.html">
+  <meta property="article:published_time" content="2026-06-21">
+  <meta property="article:author" content="Shreehari Bhattarai">
+  <meta property="article:section" content="DAX">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/inner.css">
+  <link rel="stylesheet" href="../assets/css/post.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Context Transition in DAX, Explained With Real Measures",
+    "description": "Why CALCULATE changes everything, and how to reason about row context vs. filter context without memorizing rules.",
+    "author": { "@type": "Person", "name": "Shreehari Bhattarai", "url": "https://shreeharibhattarai.com.np/about.html" },
+    "publisher": { "@type": "Organization", "name": "shreehari.bi", "url": "https://shreeharibhattarai.com.np/" },
+    "datePublished": "2026-06-21",
+    "dateModified": "2026-06-21",
+    "mainEntityOfPage": "https://shreeharibhattarai.com.np/blog/dax-context-transition-explained.html"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://shreeharibhattarai.com.np/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://shreeharibhattarai.com.np/blog.html" },
+      { "@type": "ListItem", "position": 3, "name": "Context Transition in DAX", "item": "https://shreeharibhattarai.com.np/blog/dax-context-transition-explained.html" }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="reading-progress" id="reading-progress"></div>
+
+  <nav class="site-nav">
+    <div class="container">
+      <a href="../index.html" class="brand"><span class="brand-mark">SB</span><span class="brand-name">shreehari<span>.bi</span></span></a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../blog.html" aria-current="page">Blog</a></li>
+        <li><a href="../tutorials/index.html">Tutorials</a></li>
+        <li><a href="../resources/index.html">Resources</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+      <a href="../contact.html" class="nav-cta">Book Consultation</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <main id="main">
+    <header class="post-header">
+      <div class="container narrow">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Home</a> <span>/</span> <a href="../blog.html">Blog</a> <span>/</span> <span>Context Transition in DAX</span></nav>
+        <div class="badge-row"><span class="badge badge-cyan">DAX</span></div>
+        <h1>Context Transition in DAX, Explained With Real Measures</h1>
+        <div class="post-meta">
+          <span>Shreehari Bhattarai</span>
+          <span>June 21, 2026</span>
+          <span>11 min read</span>
+          <span>DAX</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <div class="post-layout">
+          <aside class="post-toc">
+            <h4>On this page</h4>
+            <ul>
+              <li><a href="#two-contexts">Two contexts, one confusing name</a></li>
+              <li><a href="#what-transition-means">What "transition" actually means</a></li>
+              <li><a href="#worked-example">A worked example</a></li>
+              <li><a href="#why-it-matters">Why this matters for real measures</a></li>
+              <li><a href="#mental-model">A mental model that sticks</a></li>
+              <li><a href="#faq">FAQ</a></li>
+            </ul>
+          </aside>
+
+          <article class="post-body">
+            <p>Context transition is the DAX concept most people memorize as a rule ("CALCULATE turns row context into filter context") without ever building the intuition for why. Once it clicks, entire categories of DAX bugs stop happening. Here's how I explain it to analysts I mentor.</p>
+
+            <h2 id="two-contexts">Two contexts, one confusing name</h2>
+            <p>DAX evaluates every formula inside two layers of context at once:</p>
+            <ul>
+              <li><strong>Row context</strong> exists when DAX is iterating row by row — inside a calculated column, or inside iterator functions like <code>SUMX</code> or <code>FILTER</code>. It means "right now, I know which single row I'm looking at."</li>
+              <li><strong>Filter context</strong> is the set of filters currently applied to the model — from slicers, visual axes, or explicit <code>CALCULATE</code> filters. It means "right now, these are the rows I'm allowed to see."</li>
+            </ul>
+            <p>A plain measure, evaluated in a visual, only has filter context. A calculated column, by default, only has row context. Confusion starts the moment the two need to interact.</p>
+
+            <h2 id="what-transition-means">What "transition" actually means</h2>
+            <p>Context transition is the specific act of <strong>converting row context into an equivalent filter context</strong>. It happens automatically whenever a row context reaches a <code>CALCULATE</code> (or any function that implicitly wraps one, like a measure reference).</p>
+            <div class="callout">
+              <p>In plain terms: "For this one row I'm currently on, pretend a slicer selected exactly this row's values, then re-evaluate everything as if that were the only filter in the world."</p>
+            </div>
+            <p>This is why a measure called from inside a calculated column behaves so differently from a plain arithmetic column: the measure carries a hidden <code>CALCULATE</code> that transitions the current row into a single-row filter.</p>
+
+            <h2 id="worked-example">A worked example</h2>
+            <p>Take a Sales table with a calculated column trying to show each row's share of that customer's total sales:</p>
+            <div class="code-block">
+              <div class="code-label"><span>DAX</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+              <pre><code>Customer Total Sales =
+CALCULATE ( SUM ( Sales[Amount] ), ALLEXCEPT ( Sales, Sales[CustomerID] ) )
+
+Row Share of Customer =
+DIVIDE ( Sales[Amount], [Customer Total Sales] )</code></pre>
+            </div>
+            <p>Inside <code>Customer Total Sales</code>, when it's used as a calculated column, the row context (the current Sales row) transitions into a filter context restricted to that row's <code>CustomerID</code>. <code>ALLEXCEPT</code> then removes every other filter except that one, so <code>SUM</code> sees every row belonging to the same customer — not just the current row. Without the implicit context transition triggered by <code>CALCULATE</code>, this measure reference would only ever see the current row and the whole pattern would break.</p>
+
+            <h2 id="why-it-matters">Why this matters for real measures</h2>
+            <p>The most common bug I see from analysts new to DAX is calling a measure inside <code>SUMX</code> and expecting it to aggregate over the iterator's rows the same way a column reference would. It doesn't — each call transitions to a single-row filter context, computes independently, and only then gets summed:</p>
+            <div class="code-block">
+              <div class="code-label"><span>DAX</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+              <pre><code>-- This re-evaluates [Margin %] once per product, with row context
+-- transitioned to filter context each time, then sums the results.
+Weighted Margin =
+SUMX ( Product, [Margin %] * [Product Sales] )</code></pre>
+            </div>
+            <p>That per-row re-evaluation is often exactly what you want for weighted calculations — but it's also expensive, because every iteration is a fresh CALCULATE. Knowing that this is happening is what lets you decide whether to simplify the expression or accept the cost.</p>
+
+            <h2 id="mental-model">A mental model that sticks</h2>
+            <p>Stop thinking of context transition as a special DAX rule to memorize. Think of it as a translation step: row context describes a position, filter context describes a scope, and every time a measure is called, DAX has to translate "position" into "scope" before it can compute anything. Once you're looking for that translation explicitly, most "why is this number wrong" bugs become obvious within a minute of reading the formula.</p>
+
+            <h2 id="faq">FAQ</h2>
+            <details class="faq-item">
+              <summary>Does context transition happen without CALCULATE?</summary>
+              <p>No — context transition specifically requires CALCULATE (or CALCULATETABLE). Since every measure reference implicitly wraps itself in a CALCULATE, calling a measure from row context always triggers it, even though you don't see the keyword written out.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Is context transition slow?</summary>
+              <p>It can be, especially inside iterators over large tables, because each transition is effectively a fresh query. This is one of the main reasons a measure that looks simple can be slow — the cost is in how many times context transition fires, not the formula's length.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Do calculated columns always have row context only?</summary>
+              <p>By default yes, but the moment a calculated column calls a measure or wraps part of itself in CALCULATE, that row context transitions into filter context for that portion of the formula.</p>
+            </details>
+
+            <div class="author-box card">
+              <div class="avatar">SB</div>
+              <div>
+                <h4>Shreehari Bhattarai</h4>
+                <p>Senior BI Consultant · DP-700, DP-600, PL-300 Microsoft Certified</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="related-posts">
+          <div class="section-head reveal"><p class="eyebrow">Related</p><h2>Keep reading</h2></div>
+          <div class="grid-3">
+            <a href="direct-lake-vs-import-vs-directquery.html" class="card post-card reveal">
+              <div class="badge-row"><span class="badge badge-violet">Microsoft Fabric</span></div>
+              <h3>Direct Lake vs. Import vs. DirectQuery</h3>
+              <div class="meta"><span>9 min read</span></div>
+            </a>
+            <a href="pl-300-exam-guide.html" class="card post-card reveal">
+              <div class="badge-row"><span class="badge badge-yellow">Certification</span></div>
+              <h3>PL-300 exam guide: a study plan that actually works</h3>
+              <div class="meta"><span>8 min read</span></div>
+            </a>
+            <a href="../blog.html" class="card post-card reveal">
+              <div class="badge-row"><span class="badge">All posts</span></div>
+              <h3>Browse the full blog archive</h3>
+              <div class="meta"><span>View all →</span></div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>© 2026 Shreehari Bhattarai. All rights reserved.</p>
+        <p>Transforming Data into Insights</p>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" aria-label="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+  </button>
+
+  <script src="../assets/js/main.js"></script>
+  <script>
+    window.addEventListener('scroll', () => {
+      const el = document.documentElement;
+      const scrolled = (el.scrollTop) / (el.scrollHeight - el.clientHeight) * 100;
+      document.getElementById('reading-progress').style.width = scrolled + '%';
+    }, { passive: true });
+
+    function copyCode(btn) {
+      const code = btn.closest('.code-block').querySelector('code').textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        const original = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = original, 1500);
+      });
+    }
+
+    const headings = document.querySelectorAll('.post-body h2[id]');
+    const tocLinks = document.querySelectorAll('.post-toc a');
+    const spyObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const link = document.querySelector(`.post-toc a[href="#${entry.target.id}"]`);
+        if (link && entry.isIntersecting) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    headings.forEach(h => spyObserver.observe(h));
+  </script>
+</body>
+</html>

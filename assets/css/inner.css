@@ -1,0 +1,142 @@
+/* ==========================================================================
+   INNER PAGES — shared header, breadcrumb, and layout helpers
+   ========================================================================== */
+
+.page-header {
+  padding: calc(var(--nav-h) + var(--sp-10)) 0 var(--sp-8);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.page-header h1 { font-size: clamp(2rem, 4.5vw, var(--fs-3xl)); max-width: 22ch; }
+.page-header p.hero-sub { margin-top: var(--sp-4); max-width: 60ch; }
+
+.breadcrumb {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+  margin-bottom: var(--sp-5);
+}
+.breadcrumb a { color: var(--text-tertiary); }
+.breadcrumb a:hover { color: var(--cyan); }
+.breadcrumb span { margin: 0 var(--sp-2); }
+
+.container.narrow { max-width: 760px; }
+
+.lede {
+  font-size: var(--fs-md);
+  color: var(--text-primary);
+  margin-bottom: var(--sp-5);
+}
+.container.narrow p { margin-bottom: var(--sp-5); }
+.container.narrow p:last-child { margin-bottom: 0; }
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-5);
+}
+@media (max-width: 900px) { .grid-4 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .grid-4 { grid-template-columns: 1fr; } }
+
+.plain-list { display: flex; flex-direction: column; gap: var(--sp-2); margin-top: var(--sp-3); }
+.plain-list li {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  padding-left: var(--sp-4);
+  position: relative;
+}
+.plain-list li::before {
+  content: '';
+  position: absolute; left: 0; top: 0.55em;
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--cyan);
+}
+
+.tag-cloud { display: flex; flex-wrap: wrap; gap: var(--sp-3); }
+.tag-cloud .badge { font-size: var(--fs-sm); padding: var(--sp-2) var(--sp-5); }
+
+/* ---- Filter bar (blog / tutorials / resources listings) ---- */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-8);
+  align-items: center;
+}
+.filter-bar input[type="search"] {
+  flex: 1;
+  min-width: 220px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-full);
+  padding: var(--sp-3) var(--sp-5);
+  color: var(--text-primary);
+  font-size: var(--fs-sm);
+}
+.filter-bar input[type="search"]::placeholder { color: var(--text-tertiary); }
+.filter-chip {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-full);
+  padding: var(--sp-2) var(--sp-4);
+  font-size: var(--fs-xs);
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  transition: all var(--dur-fast) var(--ease-out);
+}
+.filter-chip.active, .filter-chip:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+/* ---- Contact page ---- */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--sp-8);
+  align-items: start;
+}
+@media (max-width: 800px) { .contact-grid { grid-template-columns: 1fr; } }
+
+.form-field { margin-bottom: var(--sp-5); }
+.form-field label {
+  display: block;
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary);
+  margin-bottom: var(--sp-2);
+}
+.form-field input, .form-field textarea, .form-field select {
+  width: 100%;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-md);
+  padding: var(--sp-3) var(--sp-4);
+  color: var(--text-primary);
+  font-size: var(--fs-sm);
+  transition: border-color var(--dur-fast);
+}
+.form-field input:focus, .form-field textarea:focus, .form-field select:focus {
+  border-color: var(--cyan);
+}
+.form-field textarea { resize: vertical; min-height: 120px; }
+
+.contact-method {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-4) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.contact-method:last-child { border-bottom: none; }
+.contact-method .icon {
+  width: 42px; height: 42px;
+  border-radius: var(--r-sm);
+  background: var(--bg-tertiary);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--cyan);
+}
+.contact-method h3 { font-size: var(--fs-sm); margin-bottom: var(--sp-1); }
+.contact-method a, .contact-method span { font-size: var(--fs-sm); color: var(--text-secondary); }
+.contact-method a:hover { color: var(--cyan); }

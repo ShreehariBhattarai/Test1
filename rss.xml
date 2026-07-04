@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>shreehari.bi — Microsoft Fabric &amp; Power BI Blog</title>
+    <link>https://shreeharibhattarai.com.np/blog.html</link>
+    <description>Practical writing on Microsoft Fabric, Power BI, DAX, Power Query, and SQL from Shreehari Bhattarai.</description>
+    <language>en-us</language>
+
+    <item>
+      <title>Context Transition in DAX, Explained With Real Measures</title>
+      <link>https://shreeharibhattarai.com.np/blog/dax-context-transition-explained.html</link>
+      <guid>https://shreeharibhattarai.com.np/blog/dax-context-transition-explained.html</guid>
+      <pubDate>Sun, 21 Jun 2026 00:00:00 GMT</pubDate>
+      <description>Why CALCULATE changes everything, and how to reason about row context vs. filter context without memorizing rules.</description>
+    </item>
+    <item>
+      <title>Direct Lake vs. Import vs. DirectQuery: Choosing the Right Storage Mode</title>
+      <link>https://shreeharibhattarai.com.np/blog/direct-lake-vs-import-vs-directquery.html</link>
+      <guid>https://shreeharibhattarai.com.np/blog/direct-lake-vs-import-vs-directquery.html</guid>
+      <pubDate>Sun, 14 Jun 2026 00:00:00 GMT</pubDate>
+      <description>A practical framework for picking a Fabric semantic model storage mode based on data volume, freshness, and cost.</description>
+    </item>
+    <item>
+      <title>PL-300 Exam Guide: A Study Plan That Actually Works</title>
+      <link>https://shreeharibhattarai.com.np/blog/pl-300-exam-guide.html</link>
+      <guid>https://shreeharibhattarai.com.np/blog/pl-300-exam-guide.html</guid>
+      <pubDate>Sat, 30 May 2026 00:00:00 GMT</pubDate>
+      <description>An eight-week PL-300 study plan built around Microsoft Learn, sandbox practice, and mock exams.</description>
+    </item>
+  </channel>
+</rss>

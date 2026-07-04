@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.shreeharibhattarai.com.np/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://www.shreeharibhattarai.com.np/blog.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.shreeharibhattarai.com.np/about.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.shreeharibhattarai.com.np/blog/direct-lake-fallback-guide.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.shreeharibhattarai.com.np/blog/dax-context-transition.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.shreeharibhattarai.com.np/blog/pl300-dp600-study-path.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.shreeharibhattarai.com.np/blog/power-query-folding.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.shreeharibhattarai.com.np/blog/capacity-sizing-fabric.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.shreeharibhattarai.com.np/blog/semantic-model-design.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://shreeharibhattarai.com.np/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://shreeharibhattarai.com.np/about.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://shreeharibhattarai.com.np/blog.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://shreeharibhattarai.com.np/contact.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://shreeharibhattarai.com.np/tutorials/index.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://shreeharibhattarai.com.np/tutorials/microsoft-fabric.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://shreeharibhattarai.com.np/tutorials/power-bi.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://shreeharibhattarai.com.np/tutorials/dax.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://shreeharibhattarai.com.np/tutorials/certifications/pl-300.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://shreeharibhattarai.com.np/tutorials/certifications/dp-600.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://shreeharibhattarai.com.np/tutorials/certifications/dp-700.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://shreeharibhattarai.com.np/resources/index.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://shreeharibhattarai.com.np/blog/direct-lake-vs-import-vs-directquery.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://shreeharibhattarai.com.np/blog/dax-context-transition-explained.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://shreeharibhattarai.com.np/blog/pl-300-exam-guide.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>
