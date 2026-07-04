@@ -40,7 +40,7 @@
 .post-toc h4 { font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin-bottom: var(--sp-3); }
 .post-toc ul { display: flex; flex-direction: column; gap: var(--sp-2); border-left: 1px solid var(--border-subtle); }
 .post-toc a { color: var(--text-secondary); padding: var(--sp-1) 0 var(--sp-1) var(--sp-4); display: block; border-left: 2px solid transparent; margin-left: -1px; transition: color var(--dur-fast); }
-.post-toc a:hover, .post-toc a.active { color: var(--cyan); border-left-color: var(--cyan); }
+.post-toc a:hover, .post-toc a.active { color: var(--teal); border-left-color: var(--teal); }
 
 .post-body { max-width: 720px; font-size: var(--fs-base); }
 .post-body > * + * { margin-top: var(--sp-5); }
@@ -51,10 +51,10 @@
 .post-body ul, .post-body ol { padding-left: var(--sp-6); color: var(--text-secondary); display: flex; flex-direction: column; gap: var(--sp-2); }
 .post-body ul { list-style: disc; }
 .post-body ol { list-style: decimal; }
-.post-body a { color: var(--cyan); text-decoration: underline; text-underline-offset: 3px; }
+.post-body a { color: var(--teal); text-decoration: underline; text-underline-offset: 3px; }
 
 .post-body blockquote {
-  border-left: 3px solid var(--violet);
+  border-left: 3px solid var(--amber);
   padding: var(--sp-4) var(--sp-6);
   background: var(--bg-secondary);
   border-radius: 0 var(--r-md) var(--r-md) 0;
@@ -94,7 +94,7 @@
   font-size: var(--fs-xs);
   font-family: var(--font-mono);
 }
-.copy-btn:hover { color: var(--cyan); border-color: var(--cyan); }
+.copy-btn:hover { color: var(--teal); border-color: var(--teal); }
 
 .callout {
   background: var(--gradient-fabric-soft);

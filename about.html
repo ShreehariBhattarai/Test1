@@ -16,12 +16,13 @@
   <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/css/tokens.css">
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/css/inner.css">
+  <link rel="stylesheet" href="assets/css/home.css">
 
   <script type="application/ld+json">
   {
@@ -48,9 +49,9 @@
         <li><a href="resources/index.html">Resources</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
-      <a href="contact.html" class="nav-cta">Book Consultation</a>
+      <a href="contact.html" class="nav-cta">Book a consult</a>
       <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
     </div>
   </nav>
@@ -58,11 +59,9 @@
   <main id="main">
     <header class="page-header">
       <div class="container">
-        <nav class="breadcrumb" aria-label="Breadcrumb">
-          <a href="index.html">Home</a> <span>/</span> <span>About</span>
-        </nav>
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> <span>About</span></nav>
         <p class="eyebrow">About</p>
-        <h1>Nine years turning enterprise data into decisions people trust</h1>
+        <h1>An auditor's instinct, applied to Microsoft Fabric</h1>
       </div>
     </header>
 
@@ -78,28 +77,28 @@
       </div>
     </section>
 
-    <!-- FOCUS AREAS -->
+    <!-- FOCUS AREAS — plain text ledger, not another card grid -->
     <section class="section">
-      <div class="container">
+      <div class="container narrow">
         <div class="section-head reveal">
-          <p class="eyebrow">What I focus on</p>
-          <h2>Where I add the most value</h2>
+          <p class="eyebrow">Where I add value</p>
+          <h2>What I actually get hired for</h2>
         </div>
-        <div class="grid-4">
-          <div class="card reveal">
-            <h3>Business Intelligence &amp; Analytics</h3>
+        <div class="capability-ledger reveal">
+          <div class="capability-row">
+            <h3>BI &amp; Analytics</h3>
             <p>Dashboard and semantic model design that survives contact with real executive scrutiny, not just a demo.</p>
           </div>
-          <div class="card reveal">
+          <div class="capability-row">
             <h3>Data Engineering</h3>
             <p>Lakehouse and warehouse architecture in Microsoft Fabric, ETL/ELT pipelines, and dimensional modeling.</p>
           </div>
-          <div class="card reveal">
-            <h3>Digital Transformation</h3>
+          <div class="capability-row">
+            <h3>Transformation</h3>
             <p>Moving organizations off spreadsheet reporting and legacy cubes onto governed, self-service platforms.</p>
           </div>
-          <div class="card reveal">
-            <h3>Consulting &amp; Leadership</h3>
+          <div class="capability-row">
+            <h3>Leadership</h3>
             <p>Running BI teams, setting data governance policy, and translating business requirements into technical specs.</p>
           </div>
         </div>
@@ -108,49 +107,35 @@
 
     <!-- SKILLS -->
     <section class="section">
-      <div class="container">
+      <div class="container narrow">
         <div class="section-head reveal">
           <p class="eyebrow">Core competencies</p>
           <h2>Tools &amp; technologies</h2>
         </div>
-        <div class="grid-4">
-          <div class="card reveal">
+        <div class="capability-ledger reveal">
+          <div class="capability-row">
             <h3>Power BI</h3>
-            <ul class="plain-list">
-              <li>Advanced DAX</li>
-              <li>Data modeling</li>
-              <li>Dashboard development</li>
-              <li>Row-level security</li>
-              <li>Performance optimization</li>
-            </ul>
+            <div class="capability-tags">
+              <span class="badge">Advanced DAX</span><span class="badge">Data modeling</span><span class="badge">Dashboard development</span><span class="badge">Row-level security</span><span class="badge">Performance optimization</span>
+            </div>
           </div>
-          <div class="card reveal">
+          <div class="capability-row">
             <h3>Microsoft Dynamics</h3>
-            <ul class="plain-list">
-              <li>Dynamics 365 F&amp;O</li>
-              <li>Business Central</li>
-              <li>Dynamics CRM</li>
-              <li>Dynamics NAV</li>
-              <li>ERP/CRM data structures</li>
-            </ul>
+            <div class="capability-tags">
+              <span class="badge">Dynamics 365 F&amp;O</span><span class="badge">Business Central</span><span class="badge">Dynamics CRM</span><span class="badge">Dynamics NAV</span><span class="badge">ERP/CRM data structures</span>
+            </div>
           </div>
-          <div class="card reveal">
+          <div class="capability-row">
             <h3>Data Engineering</h3>
-            <ul class="plain-list">
-              <li>SQL Server &amp; T-SQL</li>
-              <li>ETL/ELT pipelines</li>
-              <li>Data warehouse design</li>
-              <li>OLAP cube development</li>
-            </ul>
+            <div class="capability-tags">
+              <span class="badge">SQL Server &amp; T-SQL</span><span class="badge">ETL/ELT pipelines</span><span class="badge">Data warehouse design</span><span class="badge">OLAP cube development</span>
+            </div>
           </div>
-          <div class="card reveal">
-            <h3>Power Platform &amp; BI Tools</h3>
-            <ul class="plain-list">
-              <li>Power Apps</li>
-              <li>Power Automate</li>
-              <li>Jet Analytics</li>
-              <li>Jet Reports &amp; Jet Hub</li>
-            </ul>
+          <div class="capability-row">
+            <h3>Power Platform</h3>
+            <div class="capability-tags">
+              <span class="badge">Power Apps</span><span class="badge">Power Automate</span><span class="badge">Jet Analytics</span><span class="badge">Jet Reports &amp; Jet Hub</span>
+            </div>
           </div>
         </div>
       </div>
@@ -242,28 +227,25 @@
       </div>
     </section>
 
-    <!-- CERTIFICATIONS -->
+    <!-- CERTIFICATIONS — stamps, not cards -->
     <section class="section">
-      <div class="container">
+      <div class="container narrow">
         <div class="section-head reveal">
           <p class="eyebrow">Credentials</p>
           <h2>Microsoft certifications</h2>
         </div>
-        <div class="grid-3">
-          <div class="card reveal">
-            <span class="badge badge-violet">DP-700</span>
-            <h3 style="margin-top: var(--sp-3);">Fabric Data Engineer Associate</h3>
-            <p>Lakehouse and warehouse implementation, Data Factory pipelines, and Fabric-native ELT design.</p>
+        <div class="stamp-row reveal">
+          <div class="stamp">
+            <div class="stamp-ring">700</div>
+            <div><h3>DP-700 · Fabric Data Engineer Associate</h3><p>Lakehouse and warehouse implementation, Data Factory pipelines, and Fabric-native ELT design.</p></div>
           </div>
-          <div class="card reveal">
-            <span class="badge badge-cyan">DP-600</span>
-            <h3 style="margin-top: var(--sp-3);">Fabric Analytics Engineer Associate</h3>
-            <p>Semantic modeling, Direct Lake, and enterprise-scale analytics delivery on Microsoft Fabric.</p>
+          <div class="stamp">
+            <div class="stamp-ring">600</div>
+            <div><h3>DP-600 · Fabric Analytics Engineer Associate</h3><p>Semantic modeling, Direct Lake, and enterprise-scale analytics delivery on Microsoft Fabric.</p></div>
           </div>
-          <div class="card reveal">
-            <span class="badge badge-yellow">PL-300</span>
-            <h3 style="margin-top: var(--sp-3);">Power BI Data Analyst Associate</h3>
-            <p>Data preparation, modeling, visualization, and deployment for Power BI at scale.</p>
+          <div class="stamp">
+            <div class="stamp-ring">300</div>
+            <div><h3>PL-300 · Power BI Data Analyst Associate</h3><p>Data preparation, modeling, visualization, and deployment for Power BI at scale.</p></div>
           </div>
         </div>
       </div>
@@ -289,12 +271,13 @@
 
     <section class="section">
       <div class="container">
-        <div class="cta-band reveal">
+        <div class="cta-editorial reveal">
+          <p class="eyebrow">Get in touch</p>
           <h2>Have a Fabric or Power BI project in mind?</h2>
           <p>I take on a limited number of consulting engagements alongside my role at Dogma Group.</p>
           <div class="hero-actions">
-            <a href="contact.html" class="btn btn-primary">Get in Touch</a>
-            <a href="assets/resume/Shreehari-Bhattarai-Resume.pdf" class="btn btn-secondary">Download Résumé</a>
+            <a href="contact.html" class="btn btn-primary">Get in touch</a>
+            <a href="assets/resume/Shreehari-Bhattarai-Resume.pdf" class="btn btn-ghost">Download résumé →</a>
           </div>
         </div>
       </div>

@@ -9,7 +9,34 @@ document.addEventListener('DOMContentLoaded', () => {
   initStatCounters();
   initActiveNavLink();
   initSmoothAnchors();
+  initTraceSignature();
 });
+
+/* Hero signature: cumulatively "trace" a figure back to its source system.
+   Ties the auditor background to the Fabric/Power BI work directly. */
+function initTraceSignature() {
+  const steps = document.querySelectorAll('.trace-step');
+  if (!steps.length) return;
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) {
+    steps.forEach(s => s.classList.add('lit'));
+    return;
+  }
+
+  let i = 0;
+  function tick() {
+    steps.forEach((s, idx) => s.classList.toggle('lit', idx <= i));
+    i++;
+    if (i > steps.length) {
+      i = 0;
+      setTimeout(tick, 1400); // pause on full trace, then restart
+    } else {
+      setTimeout(tick, 650);
+    }
+  }
+  tick();
+}
 
 /* Mobile nav toggle */
 function initMobileNav() {
@@ -60,7 +87,7 @@ function initBackToTop() {
 
 /* Animated stat counters */
 function initStatCounters() {
-  const cards = document.querySelectorAll('.stat-number[data-count]');
+  const cards = document.querySelectorAll('.stat-number[data-count], .ledger-number[data-count]');
   if (!cards.length) return;
 
   const animate = (el) => {

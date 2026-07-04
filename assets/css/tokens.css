@@ -1,48 +1,49 @@
 /* ==========================================================================
-   FABRIC DARK — Design Tokens
-   shreehari.bi design system
+   LEDGER DARK — Design Tokens
+   shreehari.bi design system, v2
+   Grounded in the auditor→BI throughline: warm ink, ledger-stamp amber,
+   data-lake teal. Serif display for editorial authority.
    ========================================================================== */
 
 :root {
-  /* ---- Surfaces ---- */
-  --bg-void: #07090d;
-  --bg-primary: #0a0e14;
-  --bg-secondary: #10141c;
-  --bg-tertiary: #171d29;
-  --bg-elevated: #1c2330;
-  --border-subtle: rgba(240, 244, 255, 0.07);
-  --border-default: rgba(240, 244, 255, 0.12);
-  --border-strong: rgba(240, 244, 255, 0.2);
+  /* ---- Surfaces (warm ink, not blue-black) ---- */
+  --bg-void: #0a0b0d;
+  --bg-primary: #0d0f12;
+  --bg-secondary: #15171b;
+  --bg-tertiary: #1b1e23;
+  --bg-elevated: #22252b;
+  --border-subtle: rgba(240, 236, 228, 0.06);
+  --border-default: rgba(240, 236, 228, 0.12);
+  --border-strong: rgba(240, 236, 228, 0.22);
 
-  /* ---- Text ---- */
-  --text-primary: #f2f4f8;
-  --text-secondary: #a3adc2;
-  --text-tertiary: #6b7690;
-  --text-disabled: #454e63;
+  /* ---- Text (warm paper white, not cold grey) ---- */
+  --text-primary: #f2ede2;
+  --text-secondary: #a9a39a;
+  --text-tertiary: #6f6a63;
+  --text-disabled: #454138;
 
-  /* ---- Fabric accent system ---- */
-  --violet: #8457ff;
-  --violet-dim: #5b3ecf;
-  --cyan: #22d3ee;
-  --cyan-dim: #0e9cb3;
+  /* ---- Accent system: ledger stamp amber + data-lake teal ---- */
+  --amber: #c9974a;
+  --amber-dim: #a67a35;
+  --teal: #3fa7a0;
+  --teal-dim: #2b7c76;
   --pbi-yellow: #f2c811;
   --pbi-yellow-dim: #c9a30e;
 
-  --gradient-fabric: linear-gradient(135deg, #8457ff 0%, #22d3ee 100%);
-  --gradient-fabric-soft: linear-gradient(135deg, rgba(132, 87, 255, 0.15) 0%, rgba(34, 211, 238, 0.15) 100%);
-  --gradient-mesh: radial-gradient(at 20% 20%, rgba(132, 87, 255, 0.18) 0px, transparent 50%),
-                   radial-gradient(at 80% 0%, rgba(34, 211, 238, 0.12) 0px, transparent 50%),
-                   radial-gradient(at 90% 80%, rgba(242, 200, 17, 0.06) 0px, transparent 50%);
+  --gradient-fabric: linear-gradient(135deg, #c9974a 0%, #3fa7a0 100%);
+  --gradient-fabric-soft: linear-gradient(135deg, rgba(201, 151, 74, 0.14) 0%, rgba(63, 167, 160, 0.14) 100%);
+  --gradient-mesh: radial-gradient(at 15% 10%, rgba(201, 151, 74, 0.08) 0px, transparent 45%),
+                   radial-gradient(at 85% 30%, rgba(63, 167, 160, 0.07) 0px, transparent 50%);
 
   /* ---- Status ---- */
-  --success: #3fb950;
-  --warning: #f2c811;
-  --danger: #f85149;
+  --success: #6ea56a;
+  --warning: #c9974a;
+  --danger: #c1554a;
 
-  /* ---- Typography ---- */
-  --font-display: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
-  --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+  /* ---- Typography: serif display, plain sans body, mono for data ---- */
+  --font-display: 'Fraunces', 'Iowan Old Style', 'Georgia', serif;
+  --font-body: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Consolas', monospace;
 
   --fs-xs: 0.75rem;
   --fs-sm: 0.875rem;
@@ -53,7 +54,7 @@
   --fs-2xl: 2.25rem;
   --fs-3xl: 3rem;
   --fs-4xl: 4rem;
-  --fs-5xl: 5.5rem;
+  --fs-5xl: 5.25rem;
 
   /* ---- Spacing scale ---- */
   --sp-1: 0.25rem;
@@ -67,22 +68,22 @@
   --sp-12: 6rem;
   --sp-16: 8rem;
 
-  /* ---- Radius ---- */
-  --r-sm: 6px;
-  --r-md: 12px;
-  --r-lg: 20px;
+  /* ---- Radius: smaller, less "bubble" than v1 ---- */
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 14px;
   --r-full: 999px;
 
   /* ---- Shadow / glass ---- */
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.35);
   --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.45);
-  --shadow-glow-violet: 0 0 40px rgba(132, 87, 255, 0.25);
-  --shadow-glow-cyan: 0 0 40px rgba(34, 211, 238, 0.2);
+  --shadow-glow-amber: 0 0 34px rgba(201, 151, 74, 0.22);
+  --shadow-glow-teal: 0 0 34px rgba(63, 167, 160, 0.18);
 
-  --glass-bg: rgba(23, 29, 41, 0.6);
-  --glass-border: rgba(240, 244, 255, 0.08);
-  --glass-blur: blur(16px);
+  --glass-bg: rgba(21, 23, 27, 0.7);
+  --glass-border: rgba(240, 236, 228, 0.08);
+  --glass-blur: blur(14px);
 
   /* ---- Motion ---- */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);

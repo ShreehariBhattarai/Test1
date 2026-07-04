@@ -16,7 +16,7 @@
   margin-bottom: var(--sp-5);
 }
 .breadcrumb a { color: var(--text-tertiary); }
-.breadcrumb a:hover { color: var(--cyan); }
+.breadcrumb a:hover { color: var(--teal); }
 .breadcrumb span { margin: 0 var(--sp-2); }
 
 .container.narrow { max-width: 760px; }
@@ -48,7 +48,7 @@
   content: '';
   position: absolute; left: 0; top: 0.55em;
   width: 5px; height: 5px; border-radius: 50%;
-  background: var(--cyan);
+  background: var(--teal);
 }
 
 .tag-cloud { display: flex; flex-wrap: wrap; gap: var(--sp-3); }
@@ -84,8 +84,8 @@
   transition: all var(--dur-fast) var(--ease-out);
 }
 .filter-chip.active, .filter-chip:hover {
-  border-color: var(--cyan);
-  color: var(--cyan);
+  border-color: var(--teal);
+  color: var(--teal);
 }
 
 /* ---- Contact page ---- */
@@ -117,7 +117,7 @@
   transition: border-color var(--dur-fast);
 }
 .form-field input:focus, .form-field textarea:focus, .form-field select:focus {
-  border-color: var(--cyan);
+  border-color: var(--teal);
 }
 .form-field textarea { resize: vertical; min-height: 120px; }
 
@@ -135,8 +135,8 @@
   background: var(--bg-tertiary);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
-  color: var(--cyan);
+  color: var(--teal);
 }
 .contact-method h3 { font-size: var(--fs-sm); margin-bottom: var(--sp-1); }
 .contact-method a, .contact-method span { font-size: var(--fs-sm); color: var(--text-secondary); }
-.contact-method a:hover { color: var(--cyan); }
+.contact-method a:hover { color: var(--teal); }
