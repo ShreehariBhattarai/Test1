@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Query Folding in Power Query: The Silent Performance Killer | Shreehari Bhattarai</title>
+<meta name="description" content="How to tell when a Power Query step breaks query folding, and three habits that keep your M code pushdown-friendly.">
+<link rel="canonical" href="https://www.shreeharibhattarai.com.np/blog/power-query-folding.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Query folding: the silent performance killer">
+<meta property="og:url" content="https://www.shreeharibhattarai.com.np/blog/power-query-folding.html">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/styles.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Direct Lake fallback: why your 'instant' report just got slow","datePublished":"2026-05-14","author":{"@type":"Person","name":"Shreehari Bhattarai"},"mainEntityOfPage":"https://www.shreeharibhattarai.com.np/blog/power-query-folding.html"}</script>
+</head>
+<body>
+<header class="hdr"><div class="wrap hdr-inner">
+  <a href="../index.html" class="logo">shreehari<span class="d">.</span>bi</a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+  <nav><ul class="nav-list">
+    <li><a href="../index.html">Home</a></li><li><a href="../blog.html" class="on">Articles</a></li>
+    <li><a href="../about.html">About</a></li><li><a href="../about.html#contact">Contact</a></li>
+  </ul></nav>
+</div></header>
+
+<div class="post-hdr"><div class="wrap" style="max-width:72ch;">
+  <div class="pmeta"><span>May 14, 2026</span><span>·</span><span>Power Query</span><span>·</span><span>5 min read</span></div>
+  <h1 style="font-size:clamp(1.9rem,4vw,2.8rem);">Direct Lake fallback: why your "instant" report just got slow</h1>
+</div></div>
+
+<article class="pbody">
+  <p>Query folding is what makes Power Query fast: instead of pulling every row into memory and transforming it locally, the engine translates your steps into a single query that runs at the source. The moment folding breaks, every step after that point runs locally, row by row. Refreshes that took thirty seconds start taking thirty minutes.</p>
+  <h2>How to check</h2>
+  <p>Right-click any step in the Applied Steps pane. If "View Native Query" is available, that step still folds. The first step where that option disappears is where folding broke — everything from there onward runs locally.</p>
+  <h2>Common folding breakers</h2>
+  <ul>
+    <li>Adding a custom column with a function the source can't translate</li>
+    <li>Changing data types in a way the source connector doesn't support pushing down</li>
+    <li>Merging or appending queries from genuinely different sources</li>
+    <li>Using Table.Buffer or other functions that deliberately force local evaluation</li>
+  </ul>
+  <h2>Three habits</h2>
+  <p>Do your filters and column removals early, before any custom logic — fewer rows and columns folded early means less work either way. Push transformations that have a native SQL equivalent ahead of anything bespoke. And when you do need a folding-breaking step, put it as late as possible in the query, so as little work as possible happens after the break.</p>
+
+  <div class="pt-row">
+    <span class="pt">Power Query</span><span class="pt">M</span><span class="pt">Performance</span>
+  </div>
+</article>
+
+<div class="cta-band"><div class="wrap">
+  <h2>Enjoyed this? <span class="grad-text">Get the next one.</span></h2>
+  <p class="sub">One email when something is worth reading. No spam.</p>
+  <form class="sf" onsubmit="handleSub(event)">
+    <input type="email" required placeholder="you@email.com" aria-label="Email address">
+    <button type="submit" class="btn btn-v" id="sub-btn">Subscribe</button>
+  </form>
+</div></div>
+
+<footer><div class="wrap">
+  <div class="fi">
+    <div class="fb"><a href="../index.html" class="logo">shreehari<span class="d">.</span>bi</a><p>Power BI &amp; Microsoft Fabric notes from Kathmandu, Nepal.</p></div>
+    <div class="fc-row">
+      <div class="fc"><h4>Site</h4><ul><li><a href="../index.html">Home</a></li><li><a href="../blog.html">Articles</a></li><li><a href="../about.html">About</a></li></ul></div>
+      <div class="fc"><h4>Connect</h4><ul><li><a href="https://www.linkedin.com/in/shreehari-bhattarai-55b09698/" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="mailto:bhattaraishreehari4@gmail.com">Email</a></li></ul></div>
+    </div>
+  </div>
+  <div class="wrap fb-row" style="padding:0;"><p>&copy; 2026 Shreehari Bhattarai.</p></div>
+</div></footer>
+<script>(function(){var tog=document.querySelector('.nav-toggle'),nl=document.querySelector('.nav-list');if(tog&&nl){tog.addEventListener('click',function(){nl.classList.toggle('open');tog.setAttribute('aria-expanded',nl.classList.contains('open'));});}})();
+function handleSub(e){e.preventDefault();var b=document.getElementById('sub-btn');b.textContent='Subscribed ✓';b.disabled=true;setTimeout(function(){b.textContent='Subscribe';b.disabled=false;e.target.reset();},3000);}</script>
+</body></html>

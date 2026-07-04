@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Direct Lake Fallback: Why Your "Instant" Report Slowed Down | Shreehari Bhattarai</title>
+<meta name="description" content="What triggers Direct Lake fallback to DirectQuery in Microsoft Fabric, how to detect it, and how to keep your semantic models in Direct Lake mode.">
+<link rel="canonical" href="https://www.shreeharibhattarai.com.np/blog/direct-lake-fallback-guide.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Direct Lake Fallback: Why Your 'Instant' Report Just Got Slow">
+<meta property="og:url" content="https://www.shreeharibhattarai.com.np/blog/direct-lake-fallback-guide.html">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Direct Lake fallback: why your 'instant' report just got slow","datePublished":"2026-06-24","author":{"@type":"Person","name":"Shreehari Bhattarai"},"mainEntityOfPage":"https://www.shreeharibhattarai.com.np/blog/direct-lake-fallback-guide.html"}</script>
+</head>
+<body>
+<header class="hdr"><div class="wrap hdr-inner">
+  <a href="../index.html" class="logo">shreehari<span class="d">.</span>bi</a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+  <nav><ul class="nav-list">
+    <li><a href="../index.html">Home</a></li><li><a href="../blog.html" class="on">Articles</a></li>
+    <li><a href="../about.html">About</a></li><li><a href="../about.html#contact">Contact</a></li>
+  </ul></nav>
+</div></header>
+
+<div class="post-hdr"><div class="wrap" style="max-width:72ch;">
+  <div class="pmeta"><span>Jun 24, 2026</span><span>·</span><span>Microsoft Fabric</span><span>·</span><span>7 min read</span></div>
+  <h1 style="font-size:clamp(1.9rem,4vw,2.8rem);">Direct Lake fallback: why your "instant" report just got slow</h1>
+</div></div>
+
+<article class="pbody">
+  <p>Direct Lake is the headline feature of Microsoft Fabric's semantic model story: query Delta tables straight off OneLake with import-mode speed and no scheduled refresh. It's genuinely fast — until, quietly, it isn't. The report still loads, the numbers still look right, but every visual takes three seconds instead of three hundred milliseconds. Nine times out of ten, that's fallback.</p>
+
+  <h2>What fallback actually is</h2>
+  <p>When a Direct Lake semantic model can't satisfy a query directly against the OneLake Delta tables, the engine drops back to DirectQuery against the underlying Fabric Warehouse or Lakehouse SQL endpoint. The report keeps working — that's the point of the safety net — but you lose the in-memory performance you were counting on. Fallback is silent by design. Nothing in the report UI tells the end user it happened.</p>
+
+  <h2>The usual triggers</h2>
+  <p>In practice, fallback tends to come from a short list of causes:</p>
+  <ul>
+    <li>Delta tables with too many row groups or small files, past the framing thresholds Fabric enforces</li>
+    <li>Use of unsupported column types or features (certain calculated columns, some security configurations)</li>
+    <li>The model exceeding the guardrails for the capacity SKU it's running on</li>
+    <li>A table that hasn't yet been framed after a Delta write, so the model temporarily reads through</li>
+  </ul>
+
+  <h2>How to catch it before your users do</h2>
+  <blockquote>If a report that used to feel instant now has a noticeable visual load time, check fallback before you check DAX.</blockquote>
+  <p>Watch the Fabric Capacity Metrics app for DirectQuery activity against semantic models you expect to be Direct Lake. A spike there, correlated with a specific model, is your signal. Second, use the Direct Lake diagnostics via DAX Studio's query plan to confirm whether a given query resolved in-memory or fell through.</p>
+
+  <h2>Keeping models in Direct Lake mode</h2>
+  <p>Most of the fix is upstream, in how the Lakehouse or Warehouse writes data. Schedule regular table maintenance (OPTIMIZE/VACUUM) to keep file counts and row group sizes within the framing limits. Avoid wide tables with very high column counts. And size your capacity with headroom — guardrail limits scale with the SKU, so a model that fits comfortably on an F64 might trigger fallback constantly on an F8.</p>
+  <p>None of this is exotic. It's the same discipline import-mode modelers have always needed — keep your tables clean and your model lean — just with a new failure mode if you skip it.</p>
+
+  <div class="pt-row">
+    <span class="pt">Direct Lake</span><span class="pt">Microsoft Fabric</span><span class="pt">Performance</span>
+  </div>
+</article>
+
+<div class="cta-band"><div class="wrap">
+  <h2>Enjoyed this? <span class="grad-text">Get the next one.</span></h2>
+  <p class="sub">One email when something is worth reading. No spam.</p>
+  <form class="sf" onsubmit="handleSub(event)">
+    <input type="email" required placeholder="you@email.com" aria-label="Email address">
+    <button type="submit" class="btn btn-v" id="sub-btn">Subscribe</button>
+  </form>
+</div></div>
+
+<footer><div class="wrap">
+  <div class="fi">
+    <div class="fb"><a href="../index.html" class="logo">shreehari<span class="d">.</span>bi</a><p>Power BI &amp; Microsoft Fabric notes from Kathmandu, Nepal.</p></div>
+    <div class="fc-row">
+      <div class="fc"><h4>Site</h4><ul><li><a href="../index.html">Home</a></li><li><a href="../blog.html">Articles</a></li><li><a href="../about.html">About</a></li></ul></div>
+      <div class="fc"><h4>Connect</h4><ul><li><a href="https://www.linkedin.com/in/shreehari-bhattarai-55b09698/" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="mailto:bhattaraishreehari4@gmail.com">Email</a></li></ul></div>
+    </div>
+  </div>
+  <div class="wrap fb-row" style="padding:0;"><p>&copy; 2026 Shreehari Bhattarai.</p></div>
+</div></footer>
+<script>(function(){var tog=document.querySelector('.nav-toggle'),nl=document.querySelector('.nav-list');if(tog&&nl){tog.addEventListener('click',function(){nl.classList.toggle('open');tog.setAttribute('aria-expanded',nl.classList.contains('open'));});}})();
+function handleSub(e){e.preventDefault();var b=document.getElementById('sub-btn');b.textContent='Subscribed ✓';b.disabled=true;setTimeout(function(){b.textContent='Subscribe';b.disabled=false;e.target.reset();},3000);}</script>
+</body></html>

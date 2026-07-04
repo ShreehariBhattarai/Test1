@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shreehari Bhattarai — Power BI & Microsoft Fabric</title>
+<meta name="description" content="Practical Power BI and Microsoft Fabric tutorials, DAX patterns, Direct Lake notes and certification guidance from Shreehari Bhattarai. 8+ years in BI engineering. DP-600, DP-700, PL-300.">
+<link rel="canonical" href="https://www.shreeharibhattarai.com.np/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shreehari Bhattarai — Power BI & Microsoft Fabric">
+<meta property="og:description" content="Field notes, DAX patterns and Fabric engineering from a Senior BI Consultant.">
+<meta property="og:url" content="https://www.shreeharibhattarai.com.np/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Shreehari Bhattarai","url":"https://www.shreeharibhattarai.com.np/","sameAs":["https://www.linkedin.com/in/shreehari-bhattarai-55b09698/"],"jobTitle":"Senior Business Intelligence Consultant"}</script>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="wrap hdr-inner">
+    <a href="index.html" class="logo">shreehari<span class="d">.</span>bi</a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+    <nav><ul class="nav-list">
+      <li><a href="index.html" class="on">Home</a></li>
+      <li><a href="blog.html">Articles</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="about.html#contact">Contact</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<!-- MASTHEAD HERO -->
+<section class="hero">
+  <div class="wrap hero-wrap">
+
+    <div class="hero-meta-top">
+      <span class="label">Power BI</span>
+      <span class="hero-meta-sep"></span>
+      <span class="label">Microsoft Fabric</span>
+      <span class="hero-meta-sep"></span>
+      <span class="label">DAX &amp; Data Engineering</span>
+      <span class="hero-meta-sep"></span>
+      <span class="label">Kathmandu, Nepal</span>
+    </div>
+
+    <div class="hero-split">
+      <div class="hero-name-col">
+        <h1><em>Shreehari</em><br>Bhattarai</h1>
+      </div>
+      <div class="hero-desc-col">
+        <div>
+          <p class="hero-tagline">Tutorials, DAX patterns, Direct Lake findings and capacity engineering — written by a working BI consultant, not a content farm.</p>
+          <div class="hero-certs">
+            <span class="hcert">DP-600 Fabric Analytics Engineer</span>
+            <span class="hcert">DP-700 Fabric Data Engineer</span>
+            <span class="hcert">PL-300 Power BI Data Analyst</span>
+          </div>
+          <div class="hero-ctas">
+            <a href="blog.html" class="btn btn-fill">Read the articles</a>
+            <a href="about.html" class="btn btn-line">About me</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-meta-bottom">
+      <span class="hero-stat"><strong>8+</strong> years in BI</span>
+      <span class="hero-meta-sep"></span>
+      <span class="hero-stat"><strong>100+</strong> dashboards delivered</span>
+      <span class="hero-meta-sep"></span>
+      <span class="hero-stat"><strong>Dogma Group</strong> &middot; Senior BI Consultant</span>
+      <span class="hero-meta-sep"></span>
+      <span class="hero-stat">Microsoft Certified &times; 3</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- DAX TICKER -->
+<div class="ticker-bar" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ti"><span class="m">Total Revenue</span> := SUM ( Sales[Amount] ) <span class="r">→ Rs 12.4M</span></span>
+    <span class="ti-sep"></span>
+    <span class="ti"><span class="m">YoY Growth %</span> := DIVIDE ( [Revenue] - [Revenue PY], [Revenue PY] ) <span class="r">→ 18.2%</span></span>
+    <span class="ti-sep"></span>
+    <span class="ti"><span class="m">Running Total</span> := CALCULATE ( [Revenue], DATESYTD ( 'Date'[Date] ) ) <span class="r">→ Rs 4.82M</span></span>
+    <span class="ti-sep"></span>
+    <span class="ti"><span class="m">Active Customers</span> := DISTINCTCOUNT ( Sales[CustomerID] ) <span class="r">→ 8,213</span></span>
+    <span class="ti-sep"></span>
+    <span class="ti"><span class="m">Direct Lake Fallback</span> := COUNTROWS ( 'System Log' ) <span class="r">→ 0 rows</span></span>
+    <span class="ti-sep"></span>
+    <!-- duplicate for seamless loop -->
+    <span class="ti"><span class="m">Total Revenue</span> := SUM ( Sales[Amount] ) <span class="r">→ Rs 12.4M</span></span>
+    <span class="ti-sep"></span>
+    <span class="ti"><span class="m">YoY Growth %</span> := DIVIDE ( [Revenue] - [Revenue PY], [Revenue PY] ) <span class="r">→ 18.2%</span></span>
+    <span class="ti-sep"></span>
+    <span class="ti"><span class="m">Running Total</span> := CALCULATE ( [Revenue], DATESYTD ( 'Date'[Date] ) ) <span class="r">→ Rs 4.82M</span></span>
+    <span class="ti-sep"></span>
+    <span class="ti"><span class="m">Active Customers</span> := DISTINCTCOUNT ( Sales[CustomerID] ) <span class="r">→ 8,213</span></span>
+    <span class="ti-sep"></span>
+    <span class="ti"><span class="m">Direct Lake Fallback</span> := COUNTROWS ( 'System Log' ) <span class="r">→ 0 rows</span></span>
+  </div>
+</div>
+
+<!-- ARTICLES -->
+<section>
+  <div class="wrap">
+    <div class="sec-hd-row">
+      <div>
+        <p class="label sec-label">Latest articles</p>
+        <h2 class="sec-title">From the model, <em>to the page</em></h2>
+      </div>
+      <a href="blog.html" class="btn btn-line">All articles &rarr;</a>
+    </div>
+
+    <div class="ag">
+      <a href="blog/direct-lake-fallback-guide.html" class="ac feat">
+        <div class="ac-topline"></div>
+        <div class="ac-cat">Microsoft Fabric</div>
+        <h3>Direct Lake fallback: why your "instant" report just got slow</h3>
+        <p class="ac-exc">A walkthrough of the conditions that silently push Direct Lake semantic models back to DirectQuery — and the monitoring habits that catch it before your users do. The report keeps working. The performance doesn't.</p>
+        <div class="ac-foot">
+          <span class="ac-date">Jun 24, 2026 &nbsp;&middot;&nbsp; 7 min read</span>
+          <span class="ac-arr">&#8599;</span>
+        </div>
+      </a>
+      <a href="blog/dax-context-transition.html" class="ac">
+        <div class="ac-topline"></div>
+        <div class="ac-cat">DAX</div>
+        <h3>Context transition, explained with a grocery receipt</h3>
+        <p class="ac-exc">The one concept that trips up every analyst moving from Excel. No jargon, one analogy.</p>
+        <div class="ac-foot">
+          <span class="ac-date">Jun 12, 2026 &nbsp;&middot;&nbsp; 5 min</span>
+          <span class="ac-arr">&#8599;</span>
+        </div>
+      </a>
+      <a href="blog/pl300-dp600-study-path.html" class="ac">
+        <div class="ac-topline"></div>
+        <div class="ac-cat">Certification</div>
+        <h3>PL-300 &rarr; DP-600 &rarr; DP-700: an honest study order</h3>
+        <p class="ac-exc">Which cert to take first, what overlaps, where each exam gets hard.</p>
+        <div class="ac-foot">
+          <span class="ac-date">May 29, 2026 &nbsp;&middot;&nbsp; 6 min</span>
+          <span class="ac-arr">&#8599;</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="ag-row2">
+      <a href="blog/power-query-folding.html" class="ac">
+        <div class="ac-topline"></div>
+        <div class="ac-cat">Power Query</div>
+        <h3>Query folding: the silent performance killer</h3>
+        <div class="ac-foot"><span class="ac-date">May 14, 2026</span><span class="ac-arr">&#8599;</span></div>
+      </a>
+      <a href="blog/capacity-sizing-fabric.html" class="ac">
+        <div class="ac-topline"></div>
+        <div class="ac-cat">Capacity &amp; Cost</div>
+        <h3>Sizing your first Fabric capacity without guessing</h3>
+        <div class="ac-foot"><span class="ac-date">Apr 30, 2026</span><span class="ac-arr">&#8599;</span></div>
+      </a>
+      <a href="blog/semantic-model-design.html" class="ac">
+        <div class="ac-topline"></div>
+        <div class="ac-cat">Semantic Models</div>
+        <h3>Star schema discipline in a Fabric world</h3>
+        <div class="ac-foot"><span class="ac-date">Apr 9, 2026</span><span class="ac-arr">&#8599;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- DAX NOTEBOOK -->
+<div class="notebook">
+  <div class="wrap nb-inner">
+    <div class="nb-left">
+      <p class="label">From the DAX notebook</p>
+      <h2>Write measures<br>that <em>explain themselves</em></h2>
+      <p>Every article includes working DAX you can copy into DAX Studio or your own model. No pseudocode, no "your results may vary."</p>
+      <a href="blog.html" class="btn btn-line-light" style="margin-top:1.6em;">Browse all articles &rarr;</a>
+    </div>
+    <div class="nb-code">
+      <div class="nb-code-header">
+        <span class="nb-code-title">Revenue YTD.dax</span>
+        <div class="nb-code-dots">
+          <span class="nb-code-dot"></span>
+          <span class="nb-code-dot"></span>
+          <span class="nb-code-dot"></span>
+        </div>
+      </div>
+      <pre><span class="nb-cm">-- Year-to-date revenue with context transition</span>
+<span class="nb-vr">Revenue YTD</span> <span class="nb-op">:=</span>
+    <span class="nb-fn">CALCULATE</span> (
+        [<span class="nb-vr">Total Revenue</span>],
+        <span class="nb-fn">DATESYTD</span> ( <span class="nb-str">'Calendar'</span>[<span class="nb-vr">Date</span>] )
+    )
+
+<span class="nb-cm">-- Compare to same period last year</span>
+<span class="nb-vr">Revenue PY</span> <span class="nb-op">:=</span>
+    <span class="nb-fn">CALCULATE</span> (
+        [<span class="nb-vr">Total Revenue</span>],
+        <span class="nb-fn">SAMEPERIODLASTYEAR</span> ( <span class="nb-str">'Calendar'</span>[<span class="nb-vr">Date</span>] )
+    )
+
+<span class="nb-cm">-- Growth percentage, safe division</span>
+<span class="nb-vr">YoY Growth %</span> <span class="nb-op">:=</span>
+    <span class="nb-fn">DIVIDE</span> (
+        [<span class="nb-vr">Revenue YTD</span>] <span class="nb-op">-</span> [<span class="nb-vr">Revenue PY</span>],
+        [<span class="nb-vr">Revenue PY</span>]
+    )</pre>
+    </div>
+  </div>
+</div>
+
+<!-- TOPICS -->
+<div class="topics-sec">
+  <div class="wrap">
+    <p class="label sec-label" style="margin-bottom:.8em;">Browse by topic</p>
+    <div class="topics">
+      <a href="blog.html" class="tp">Microsoft Fabric</a>
+      <a href="blog.html" class="tp">Power BI</a>
+      <a href="blog.html" class="tp">DAX</a>
+      <a href="blog.html" class="tp">Power Query / M</a>
+      <a href="blog.html" class="tp">Direct Lake</a>
+      <a href="blog.html" class="tp">Semantic Models</a>
+      <a href="blog.html" class="tp">Capacity &amp; Cost</a>
+      <a href="blog.html" class="tp">Certification</a>
+      <a href="blog.html" class="tp">Microsoft Dynamics 365</a>
+      <a href="blog.html" class="tp">ETL &amp; Pipelines</a>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT TEASER -->
+<section style="padding:0;">
+  <div class="about-split">
+    <div class="about-photo-col">
+      <!-- Replace with: <img src="images/profile.jpg" alt="Shreehari Bhattarai"> -->
+      <div class="about-photo-placeholder">
+        <span>images/profile.jpg</span>
+      </div>
+    </div>
+    <div class="about-text-col">
+      <p class="label sec-label">About</p>
+      <h2><em>Hi,</em> I'm Shreehari.</h2>
+      <p style="color:var(--muted);margin-top:.6em;">Senior Business Intelligence Consultant at Dogma Group, Kathmandu. I design semantic models, build Fabric lakehouses, and write DAX that executives actually understand. This site is where I write things down so I stop solving the same problem twice.</p>
+      <div class="cc-row">
+        <div class="cc"><span class="cc-code">DP-600</span><span class="cc-name">Fabric Analytics Engineer</span></div>
+        <div class="cc"><span class="cc-code">DP-700</span><span class="cc-name">Fabric Data Engineer</span></div>
+        <div class="cc"><span class="cc-code">PL-300</span><span class="cc-name">Power BI Data Analyst</span></div>
+      </div>
+      <a href="about.html" class="btn btn-line" style="margin-top:1.6em;width:fit-content;">Full bio &amp; experience &rarr;</a>
+    </div>
+  </div>
+
+  <div class="stats-strip">
+    <div class="stat"><div class="stat-num">100+</div><div class="stat-lbl">Dashboards delivered</div></div>
+    <div class="stat"><div class="stat-num">60%</div><div class="stat-lbl">Performance improvement</div></div>
+    <div class="stat"><div class="stat-num">200+</div><div class="stat-lbl">End-users served</div></div>
+    <div class="stat"><div class="stat-num">8+</div><div class="stat-lbl">Years of BI experience</div></div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="cta-band">
+  <div class="wrap">
+    <h2>Get new articles <em>by email</em></h2>
+    <p>One email when something is worth reading. No spam, ever.</p>
+    <form class="sub-form" onsubmit="handleSub(event)">
+      <input type="email" required placeholder="you@email.com" aria-label="Email address">
+      <button type="submit" class="btn btn-fill" id="sub-btn">Subscribe</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <div class="foot-brand">
+        <a href="index.html" class="logo">shreehari<span class="d">.</span>bi</a>
+        <p>Power BI &amp; Microsoft Fabric notes from Kathmandu, Nepal.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="fc"><h4>Site</h4><ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="blog.html">Articles</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul></div>
+        <div class="fc"><h4>Connect</h4><ul>
+          <li><a href="https://www.linkedin.com/in/shreehari-bhattarai-55b09698/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="mailto:bhattaraishreehari4@gmail.com">Email</a></li>
+        </ul></div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>&copy; 2026 Shreehari Bhattarai. Built with plain HTML, on purpose.</p>
+      <p>shreeharibhattarai.com.np &nbsp;&middot;&nbsp; Kathmandu, Nepal</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var tog=document.querySelector('.nav-toggle'),nl=document.querySelector('.nav-list');
+  if(tog&&nl){
+    tog.addEventListener('click',function(){nl.classList.toggle('open');tog.setAttribute('aria-expanded',nl.classList.contains('open'));});
+    nl.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){nl.classList.remove('open');});});
+  }
+})();
+function handleSub(e){
+  e.preventDefault();var b=document.getElementById('sub-btn');
+  b.textContent='Subscribed ✓';b.disabled=true;
+  setTimeout(function(){b.textContent='Subscribe';b.disabled=false;e.target.reset();},3000);
+}
+</script>
+</body>
+</html>
